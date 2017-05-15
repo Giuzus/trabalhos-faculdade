@@ -30,35 +30,55 @@
         return null;
     }
 
-    function call($controller, $action, $parameters) {
-        // require the file that matches the controller name
-        require_once('controllers/' . $controller . '_controller.php');
+    function callError404()
+    {
+        call('pages','error404');
+    }
 
-        $controller = ucwords($controller) . 'Controller';
+    function call($controller, $action, $parameters = null) {
 
-        $r = new ReflectionClass($controller);
-        $obj = $r->newInstance();
-        $method = new ReflectionMethod( $controller, $action );
-
-
-        $method_parameters = $method->getParameters();
+        $filename = 'controllers/' . $controller . '_controller.php';
         
-        $valid = true;
+        if (file_exists( $filename ))
+        {
+            require_once($filename);
 
-        foreach ($method_parameters as $m_param) {
+            $existing_classes = get_declared_classes();
+            $controller_class = ucwords($controller) . 'Controller';
             
-            if( !(isset($parameters[$m_param->getName()]) || $m_param->isOptional()))
-            {
-                $valid = false;
-                break;
+            if(in_array($controller_class,$existing_classes)){
+                $r = new ReflectionClass($controller_class);
+                
+                if($r->hasMethod($action)){    
+                    $obj = $r->newInstance();
+                    $method = new ReflectionMethod( $controller_class, $action );
+                    $method_parameters = $method->getParameters();
+                
+                    $valid = true;
+
+                    foreach ($method_parameters as $m_param) {
+                        
+                        if( !(isset($parameters[$m_param->getName()]) || $m_param->isOptional()))
+                        {
+                            $valid = false;
+                            break;
+                        }
+                    }
+
+                    if($valid)
+                    {
+                        //inicializa caso seja nulo, inovoke args não aceita null
+                        $parameters = $parameters == null ? array() : $parameters;
+
+                        $method->invokeArgs( $obj, $parameters );
+                        return;
+                    }
+                }
             }
         }
-
-        if($valid)
-        {
-            $method->invokeArgs( $obj, $parameters );
-        }
         
+        callError404();
+        return;        
     }
 
     

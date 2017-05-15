@@ -4,8 +4,9 @@
       require_once('views/pages/home.php');
     }
 
-    public function error() {
-      require_once('views/pages/error.php');
+    public function error404() {
+      require_once('views/pages/error404.php');
     }
+
   }
 ?>

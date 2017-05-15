@@ -16,12 +16,12 @@
   <body>
     <nav class="light-blue lighten-1" role="navigation">
 		  <div class="nav-wrapper container">
-        <a id="logo-container" href="?controller=pages&action=home" class="brand-logo">
+        <a id="logo-container" href="pages/home" class="brand-logo">
           Transportadora
         </a>
         <ul class="right">
           <li>
-            <a href="?controller=funcionarios&action=list">Funcionários</a>
+            <a href="funcionarios">Funcionários</a>
           </li>
         </ul>
       </div>
