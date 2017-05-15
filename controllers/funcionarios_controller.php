@@ -3,7 +3,7 @@
     require_once('models/funcionario.php');
 
     class FuncionariosController {
-        public function list() {
+        public function index() {
             
             $funcionarios = Funcionario::all();
             require_once('views/funcionarios/list.php');

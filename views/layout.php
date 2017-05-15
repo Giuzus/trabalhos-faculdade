@@ -1,7 +1,7 @@
 <DOCTYPE html>
 <html>
   <head>
-
+    <base href="http://localhost/transportadora/">
 	  <title>Materialize sz</title>
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
