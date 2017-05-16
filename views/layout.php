@@ -27,11 +27,11 @@
       </div>
     </nav>
 
-    <?php require_once('routes.php'); ?>
-
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="content/imported/jquery/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="content/imported/materialize/js/materialize.min.js"></script>
+
+    <?php require_once('routes.php'); ?>
 
   <body>
 <html>

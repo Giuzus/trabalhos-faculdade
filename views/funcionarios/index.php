@@ -33,5 +33,9 @@
             </li>
         <?php endforeach;?>
     </ul>
-
 </div>
+ <div class="fixed-action-btn">
+    <a href="funcionarios/create" class="btn-floating btn-large waves-effect waves-light red">
+        <i class="material-icons" >add</i>
+    </a>
+  </div>
