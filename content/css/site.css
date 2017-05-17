@@ -2,3 +2,7 @@
 .user-select-none{
     user-select: none;
 }
+
+i.icon-grey {
+    color: #888;
+}

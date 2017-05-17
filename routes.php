@@ -1,85 +1,92 @@
 <?php
 
-    define("LANDING_CONTROLLER" ,"pages");
-    define("LANDING_ACTION"     ,"home");
+    define("LANDING_CONTROLLER", "pages");
+    define("LANDING_ACTION", "home");
     
 
-    define("DEFAULT_ACTION"     ,"index");
-    define("CONTROLLER_INDEX"   ,0);
-    define("ACTION_INDEX"       ,1);
+    define("DEFAULT_ACTION", "index");
+    define("CONTROLLER_INDEX", 0);
+    define("ACTION_INDEX", 1);
+    
+    $basepath = implode('/', array_slice(explode('/', $_SERVER['SCRIPT_NAME']), 0, -1)) . '/';
+    define("BASE_PATH", $basepath);
+    
 
-
-    function getCurrentUri()
-    {
-        $basepath = implode('/', array_slice(explode('/', $_SERVER['SCRIPT_NAME']), 0, -1)) . '/';
-        $uri = substr($_SERVER['REQUEST_URI'], strlen($basepath));
-        if (strstr($uri, '?'))
-            $uri = substr($uri, 0, strpos($uri, '?'));
-
-        $uri = trim($uri, '/');
-        return $uri;
+function getCurrentUri()
+{
+    $uri = substr($_SERVER['REQUEST_URI'], strlen(BASE_PATH));
+    if (strstr($uri, '?')) {
+        $uri = substr($uri, 0, strpos($uri, '?'));
     }
 
-    function getQueryString()
-    {
-        if(isset($_SERVER['REDIRECT_QUERY_STRING']))
-        {
-            return $_SERVER['REDIRECT_QUERY_STRING'];
-        }
+    $uri = trim($uri, '/');
+    return $uri;
+}
 
-        return null;
+function getQueryString()
+{
+    if (isset($_SERVER['REDIRECT_QUERY_STRING'])) {
+        return $_SERVER['REDIRECT_QUERY_STRING'];
     }
 
-    function callError404()
-    {
-        call('pages','error404');
-    }
+    return null;
+}
 
-    function call($controller, $action, $parameters = null) {
+function callError404()
+{
+    call('pages', 'error404');
+}
 
-        $filename = 'controllers/' . $controller . '_controller.php';
+function redirectTo($controller,$action)
+{
+    $base = BASE_PATH;
+    $url =  $base . $controller . $action;
+
+    header("LOCATION: $url");
+}
+
+function call($controller, $action, $parameters = null)
+{
+
+    $filename = 'controllers/' . $controller . '_controller.php';
         
-        if (file_exists( $filename ))
-        {
-            require_once($filename);
+    if (file_exists( $filename )) {
+        require_once($filename);
 
-            $existing_classes = get_declared_classes();
-            $controller_class = ucwords($controller) . 'Controller';
+        $existing_classes = get_declared_classes();
+        $controller_class = ucwords($controller) . 'Controller';
             
-            if(in_array($controller_class,$existing_classes)){
-                $r = new ReflectionClass($controller_class);
+        if (in_array($controller_class, $existing_classes)) {
+            $r = new ReflectionClass($controller_class);
                 
-                if($r->hasMethod($action)){    
-                    $obj = $r->newInstance();
-                    $method = new ReflectionMethod( $controller_class, $action );
-                    $method_parameters = $method->getParameters();
+            if ($r->hasMethod($action)) {
+                $obj = $r->newInstance();
+                $method = new ReflectionMethod( $controller_class, $action );
+                $method_parameters = $method->getParameters();
                 
-                    $valid = true;
+                $valid = true;
 
-                    foreach ($method_parameters as $m_param) {
-                        
-                        if( !(isset($parameters[$m_param->getName()]) || $m_param->isOptional()))
-                        {
-                            $valid = false;
-                            break;
-                        }
+                foreach ($method_parameters as $m_param) {
+                    if (!(isset($parameters[$m_param->getName()]) || $m_param->isOptional())) {
+                        $valid = false;
+                        break;
                     }
+                }
 
-                    if($valid)
-                    {
-                        //inicializa caso seja nulo, inovoke args não aceita null
-                        $parameters = $parameters == null ? array() : $parameters;
+                if ($valid) {
+                    //inicializa caso seja nulo, inovoke args não aceita null
+                    $parameters = $parameters == null ? array() : $parameters;
 
-                        $method->invokeArgs( $obj, $parameters );
-                        return;
-                    }
+                    $method->invokeArgs( $obj, $parameters );
+                    return;
                 }
             }
         }
-        
-        callError404();
-        return;        
     }
+        
+    callError404();
+    return;
+}
 
     
 
@@ -94,19 +101,13 @@
     $queryString = getQueryString();
     parse_str($queryString, $parameters);
 
-    if(isset($routes[CONTROLLER_INDEX]) && $routes[CONTROLLER_INDEX] != null)
-    {
-        $controller = $routes[CONTROLLER_INDEX];
-        if(isset($routes[ACTION_INDEX]) && $routes[ACTION_INDEX] != null)
-        {
-            $action = $routes[ACTION_INDEX];
-        }
-        else
-        {
-            $action = DEFAULT_ACTION;
-        }
+if (isset($routes[CONTROLLER_INDEX]) && $routes[CONTROLLER_INDEX] != null) {
+    $controller = $routes[CONTROLLER_INDEX];
+    if (isset($routes[ACTION_INDEX]) && $routes[ACTION_INDEX] != null) {
+        $action = $routes[ACTION_INDEX];
+    } else {
+        $action = DEFAULT_ACTION;
     }
+}
     
     call($controller, $action, $parameters);
-
-?>
