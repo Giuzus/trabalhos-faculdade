@@ -8,7 +8,6 @@ class FuncionariosController
         
     public function index()
     {
-            
         $funcionarios = Funcionario::all();
         require_once('views/funcionarios/index.php');
     }
@@ -34,14 +33,14 @@ class FuncionariosController
 
         Funcionario::create($funcionario);
         
-        redirectTo("funcionarios","");
+        RouteManager::redirectTo("funcionarios","");
     }
 
     public function excluir($id){
 
         Funcionario::excluir($id);
 
-        redirectTo("funcionarios","");
+        RouteManager::redirectTo("funcionarios","");
 
     }
 }
