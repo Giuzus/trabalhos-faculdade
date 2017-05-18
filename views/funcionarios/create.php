@@ -1,6 +1,6 @@
 
 <div class="container">
-    <form action="funcionarios/salvar" method="post">
+    <form id="createFuncionarioForm" action="funcionarios/salvar" method="post">
         <div class="row">
             <div class="input-field col s9">
                 <i class="material-icons prefix">account_circle</i>
@@ -9,10 +9,10 @@
             </div>
         
 
-            <div class=" col s3">
-                <!--<i class="material-icons prefix">pregnant_woman</i>-->
+            <div class="input-field col s3">
+                <i class="material-icons prefix">pregnant_woman</i>
                 <label for="funDtNasc">Data Nascimento</label>
-                <input id="funDtNasc" type="date" required class="validate" name="funDtNasc">
+                <input id="funDtNasc" type="date" required class="datepicker" name="funDtNasc">
                 
             </div>
         </div>
@@ -37,8 +37,8 @@
         <div class="row">
             <div class="input-field col s4">
                 <i class="material-icons prefix">face</i>
-                <select name"funCateg" required name="funCateg">
-                    <option value="" disabled selected>Selecione</option>
+                <select id="funCateg" required class="validate" name="funCateg">
+                    <option value="" >Selecione</option>
                     <option value="1">Cat1</option>
                     <option value="2">Cat2</option>
                     <option value="3">Cat3</option>
@@ -48,8 +48,8 @@
 
             <div class="input-field col s4">
                 <i class="material-icons prefix">class</i>
-                <select name"funClasse" required name="funClasse">
-                    <option value="" disabled selected>Selecione</option>
+                <select id="funClasse" required class="validate" name="funClasse">
+                    <option value="">Selecione</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -70,3 +70,4 @@
 
 
 <script type="text/javascript" src="views/funcionarios/scripts/create.js"></script>
+<script type="text/javascript" src="content/imported/jquery-validation/jquery.validate.min.js"></script>

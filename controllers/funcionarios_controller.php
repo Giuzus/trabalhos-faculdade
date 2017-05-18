@@ -21,15 +21,11 @@ class FuncionariosController
 
     public function salvar()
     {
-        //TODO: ADICIONAR VALIDAÇÃO
+        //TODO: adicionar validação.
 
         $funcionario = Funcionario::fromArray($_POST);
 
         $data = date_parse($funcionario->funDtNasc);
-
-        $funcionario->funDtNasc = sprintf("%s-%s-%s", $data["year"],
-                                                        $data["month"],
-                                                        $data["day"]);
 
         Funcionario::create($funcionario);
         
