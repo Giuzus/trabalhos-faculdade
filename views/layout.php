@@ -23,6 +23,9 @@
           <li>
             <a href="funcionarios">Funcionários</a>
           </li>
+          <li>
+            <a href="veiculos">Veículos</a>
+          </li>
         </ul>
       </div>
     </nav>
