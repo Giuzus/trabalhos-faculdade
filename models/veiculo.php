@@ -33,6 +33,18 @@ class Veiculo
         return $list;
     }
 
+    public static function getVeiculo($id)
+    {
+        $db = Db::getInstance();
+        $statement = $db->prepare('SELECT * FROM Veiculos WHERE veiID = :veiID ');
+        $statement->bindParam(':veiID', $id);
+        $statement->execute();
+
+        $row = $statement->fetch();
+
+        return Veiculo::fromArray($row);
+    }
+
     public static function create($veiculo)
     {
         $db = Db::getInstance();
@@ -46,6 +58,19 @@ class Veiculo
 
         $statement = $db->prepare('INSERT INTO Veiculos VALUES ( :veiID, :veiDescr, :veiAno, :veiPlaca, :veiCateg)');
         $statement->bindParam(':veiID', $veiculo->veiID);
+        $statement->bindParam(':veiDescr', $veiculo->veiDescr);
+        $statement->bindParam(':veiAno', $veiculo->veiAno);
+        $statement->bindParam(':veiPlaca', $veiculo->veiPlaca);
+        $statement->bindParam(':veiCateg', $veiculo->veiCateg);
+        $statement->execute();
+    }
+
+    public static function update($veiculo)
+    {
+        $db = Db::getInstance();
+        
+        $statement = $db->prepare('UPDATE Veiculos SET veiDescr = :veiDescr, veiAno = :veiAno, veiPlaca = :veiPlaca, veiCateg = :veiCateg WHERE veiID = :veiID');
+        $statement->bindParam(':veiID', intval($veiculo->veiID), PDO::PARAM_INT);
         $statement->bindParam(':veiDescr', $veiculo->veiDescr);
         $statement->bindParam(':veiAno', $veiculo->veiAno);
         $statement->bindParam(':veiPlaca', $veiculo->veiPlaca);

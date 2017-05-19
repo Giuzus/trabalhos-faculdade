@@ -16,6 +16,12 @@ class VeiculosController
         require_once('views/veiculos/create.php');
     }
 
+    public function edit($id)
+    {
+        $veiculo = Veiculo::getVeiculo($id);
+        require_once('views/veiculos/edit.php');
+    }
+
 
     public function salvar()
     {
@@ -23,7 +29,10 @@ class VeiculosController
 
         $veiculo = Veiculo::fromArray($_POST);
 
-        Veiculo::create($veiculo);
+        if($veiculo->veiID != null)
+            Veiculo::update($veiculo);
+        else
+            Veiculo::create($veiculo);
         
         RouteManager::redirectTo("veiculos","");
     }

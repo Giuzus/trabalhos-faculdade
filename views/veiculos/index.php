@@ -1,5 +1,6 @@
 <div class="container">
-
+    <br />
+    <h5>Veículos</h5>
     <ul class="collapsible" data-collapsible="accordion">
         
         <?php foreach($veiculos as $veiculo ) :?>
@@ -26,6 +27,9 @@
                         <div class="col s6">
                             <a href="veiculos/excluir?id=<?php echo $veiculo->veiID ?>">
                                 <i class="material-icons icon-grey right bottom">delete_forever</i> 
+                            </a>
+                            <a href="veiculos/edit?id=<?php echo $veiculo->veiID ?>">
+                                <i class="material-icons icon-grey right bottom">mode_edit</i> 
                             </a>
                         </div>
                     </div>
