@@ -14,6 +14,12 @@
   </head>
 
   <body>
+  <ul id="more-dropdown" class="dropdown-content">
+    <li><a href="clientes">Clientes</a></li>
+    <li><a href="#!">two</a></li>
+    <li><a href="#!">three</a></li>
+    <li class="divider"></li>
+  </ul>
     <nav class="light-blue lighten-1" role="navigation">
 		  <div class="nav-wrapper container">
         <a id="logo-container" href="pages/home" class="brand-logo">
@@ -25,6 +31,9 @@
           </li>
           <li>
             <a href="veiculos">Veículos</a>
+          </li>
+          <li>
+            <a class="dropdown-button" href="#!" data-activates="more-dropdown">Mais<i class="material-icons right">arrow_drop_down</i></a>
           </li>
         </ul>
       </div>
