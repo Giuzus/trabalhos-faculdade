@@ -45,6 +45,21 @@ class Veiculo
         return Veiculo::fromArray($row);
     }
 
+    public static function buscar($placa)
+    {
+        $placa = '%'.$placa.'%';
+        $db = Db::getInstance();
+        $statement = $db->prepare('SELECT * FROM Veiculos WHERE veiPlaca like :veiPlaca ');
+        $statement->bindParam(':veiPlaca', $placa );
+        $statement->execute();
+
+        foreach ($statement->fetchAll() as $row) {
+            $retorno[] = Veiculo::fromArray($row);
+        }
+
+        return $retorno;
+    }
+
     public static function create($veiculo)
     {
         $db = Db::getInstance();
@@ -85,5 +100,4 @@ class Veiculo
         $req = $db->prepare('DELETE FROM Veiculos WHERE veiID = ' . $id);
         $req->execute();
     }
-
 }

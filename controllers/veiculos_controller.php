@@ -43,4 +43,13 @@ class VeiculosController
 
         RouteManager::redirectTo("veiculos","");
     }
+
+    public function buscar($placa){
+
+            $veiculos = Veiculo::buscar($placa);
+        require_once('views/veiculos/index.php');
+
+    }
+
+
 }

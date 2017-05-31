@@ -1,5 +1,19 @@
 <div class="container">
 
+    <br />
+    <h5>Funcionários</h5>
+
+    <form class="row" action="funcionarios/buscar" method="get" validate>
+        <div class="input-field col s6 inline">
+            <input placeholder="Nome" id="nome" name="nome" type="text" class="validate">
+        </div>
+        <div class="input-field inline">
+            <button class="btn waves-effect waves-light" type="submit">Pesquisar
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
+    </form>
+
     <ul class="collapsible" data-collapsible="accordion">
         
         <?php foreach($funcionarios as $funcionario ) :?>

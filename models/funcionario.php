@@ -59,6 +59,21 @@ class Funcionario
         return $list;
     }
 
+    public static function buscar($nome)
+    {
+        $nome = '%'. $nome .'%';
+        $db = Db::getInstance();
+        $statement = $db->prepare('SELECT * FROM Funcionarios WHERE funNome like :funNome ');
+        $statement->bindParam(':funNome', $nome );
+        $statement->execute();
+
+        foreach ($statement->fetchAll() as $row) {
+            $retorno[] = Funcionario::fromArray($row);  
+        }
+
+        return $retorno;
+    }
+
     public static function create($funcionario)
     {
         $db = Db::getInstance();

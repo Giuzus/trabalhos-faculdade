@@ -1,9 +1,21 @@
 <div class="container">
     <br />
     <h5>Veículos</h5>
+
+    <form class="row" action="veiculos/buscar" method="get" validate>
+        <div class="input-field col s6 inline">
+            <input placeholder="Placa" id="placa" name="placa" type="text" class="validate">
+        </div>
+        <div class="input-field inline">
+            <button class="btn waves-effect waves-light" type="submit">Pesquisar
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
+    </form>
+
     <ul class="collapsible" data-collapsible="accordion">
         
-        <?php foreach($veiculos as $veiculo ) :?>
+        <?php foreach ($veiculos as $veiculo) :?>
             <li>
                 <div class="collapsible-header user-select-none">
                     <i class="material-icons">description</i> 
