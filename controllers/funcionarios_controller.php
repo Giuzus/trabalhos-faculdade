@@ -18,6 +18,12 @@ class FuncionariosController
         require_once('views/funcionarios/create.php');
     }
 
+    public function edit($id)
+    {
+        $funcionario = Funcionario::getFuncionario($id);
+        require_once('views/funcionarios/edit.php');
+    }
+
     public function buscar($nome)
     {
         $funcionarios = Funcionario::buscar($nome);

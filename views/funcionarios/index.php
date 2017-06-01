@@ -49,6 +49,9 @@
                             <a href="funcionarios/excluir?id=<?php echo $funcionario->funID ?>">
                                 <i class="material-icons icon-grey right bottom">delete_forever</i> 
                             </a>
+                            <a href="funcionarios/edit?id=<?php echo $funcionario->funID ?>">
+                                <i class="material-icons icon-grey right bottom">mode_edit</i> 
+                            </a>
                         </div>
                     </div>
                 </div>

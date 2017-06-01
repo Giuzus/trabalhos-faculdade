@@ -45,6 +45,18 @@ class Funcionario
         return dePara($array,new self());
     }
 
+    public static function getFuncionario($id)
+    {
+        $db = Db::getInstance();
+        $statement = $db->prepare('SELECT * FROM Funcionarios WHERE funID = :funID ');
+        $statement->bindParam(':funID', $id);
+        $statement->execute();
+
+        $row = $statement->fetch();
+
+        return Funcionario::fromArray($row);
+    }
+
     public static function all()
     {
         $list = [];
@@ -94,6 +106,30 @@ class Funcionario
                                                                                               $funcionario->funCateg);
 
         $req = $db->query($query);
+    }
+
+    public static function update($funcionario)
+    {
+        $db = Db::getInstance();
+        
+        $statement = $db->prepare('UPDATE Funcionario SET funNome   = :funNome,
+                                                          funEnder  = :funEnder,
+                                                          funFone   = :funFone,
+                                                          funDtNasc = :funDtNasc,
+                                                          funClasse = :funClasse,
+                                                          funCateg  = :funCateg
+        WHERE funID = :funID');
+
+
+        $statement->bindParam(':funID', intval($funcionario->funID), PDO::PARAM_INT);
+        $statement->bindParam(':funNome', $funcionario->funNome);
+        $statement->bindParam(':funEnder', $funcionario->funEnder);
+        $statement->bindParam(':funFone', $funcionario->funFone);
+        $statement->bindParam(':funDtNasc', $funcionario->funDtNasc, PDO::PARAM_DATE);
+        $statement->bindParam(':funClasse', $funcionario->funClasse);
+        $statement->bindParam(':funCateg', $funcionario->funCateg);
+        
+        $statement->execute();
     }
 
     public static function excluir($id)
