@@ -38,7 +38,12 @@ class FuncionariosController
 
         $data = date_parse($funcionario->funDtNasc);
 
-        Funcionario::create($funcionario);
+        if ($funcionario->funID != 0) {
+            Funcionario::update($funcionario);
+        }
+        else {
+            Funcionario::create($funcionario);
+        }
         
         RouteManager::redirectTo("funcionarios","");
     }

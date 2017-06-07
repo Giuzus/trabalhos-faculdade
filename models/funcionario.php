@@ -112,7 +112,7 @@ class Funcionario
     {
         $db = Db::getInstance();
         
-        $statement = $db->prepare('UPDATE Funcionario SET funNome   = :funNome,
+        $statement = $db->prepare('UPDATE Funcionarios SET funNome   = :funNome,
                                                           funEnder  = :funEnder,
                                                           funFone   = :funFone,
                                                           funDtNasc = :funDtNasc,
@@ -125,7 +125,7 @@ class Funcionario
         $statement->bindParam(':funNome', $funcionario->funNome);
         $statement->bindParam(':funEnder', $funcionario->funEnder);
         $statement->bindParam(':funFone', $funcionario->funFone);
-        $statement->bindParam(':funDtNasc', $funcionario->funDtNasc, PDO::PARAM_DATE);
+        $statement->bindParam(':funDtNasc', $funcionario->funDtNasc);
         $statement->bindParam(':funClasse', $funcionario->funClasse);
         $statement->bindParam(':funCateg', $funcionario->funCateg);
         

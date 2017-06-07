@@ -2,7 +2,7 @@
 <html>
   <head>
     <base href="http://localhost/transportadora/">
-	  <title>Materialize sz</title>
+	  <title>Estudo dirigido transportadora</title>
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
