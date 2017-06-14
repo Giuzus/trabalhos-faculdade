@@ -5,8 +5,9 @@ require_once('models/veiculo.php');
 class VeiculosController
 {
     public function index()
-    {       
+    {
         $veiculos = Veiculo::all();
+
         require_once('views/veiculos/index.php');
     }
 
@@ -29,27 +30,31 @@ class VeiculosController
 
         $veiculo = Veiculo::fromArray($_POST);
 
-        if($veiculo->veiID != null)
+        if ($veiculo->veiID != null) {
             Veiculo::update($veiculo);
-        else
+        } else {
             Veiculo::create($veiculo);
+        }
         
-        RouteManager::redirectTo("veiculos","");
+        RouteManager::redirectTo("veiculos", "");
     }
 
     public function excluir($id)
     {
         Veiculo::excluir($id);
 
-        RouteManager::redirectTo("veiculos","");
+        RouteManager::redirectTo("veiculos", "");
     }
 
-    public function buscar($placa){
-
-            $veiculos = Veiculo::buscar($placa);
+    public function buscar($placa)
+    {
+        $veiculos = Veiculo::buscar($placa);
         require_once('views/veiculos/index.php');
-
     }
 
-
+    public function relatorioPorAno()
+    {
+        $data = Veiculo::getQuantidadeVeiculosPorAno();
+        require_once('views/veiculos/relatorioPorAno.php');
+    }
 }

@@ -11,6 +11,11 @@
                 <i class="material-icons right">send</i>
             </button>
         </div>
+        <div class="input-field inline">
+            <a type="button" href="veiculos/relatorioPorAno" class="btn waves-effect waves-light" >Relatorio veiculos por ano
+            </a>
+            
+        </div>
     </form>
 
     <ul class="collapsible" data-collapsible="accordion">

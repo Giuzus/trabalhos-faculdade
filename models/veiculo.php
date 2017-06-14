@@ -100,4 +100,18 @@ class Veiculo
         $req = $db->prepare('DELETE FROM Veiculos WHERE veiID = ' . $id);
         $req->execute();
     }
+
+
+    public static function getQuantidadeVeiculosPorAno()
+    {
+        $db = Db::getInstance();
+
+        $req = $db->prepare('call getQtdVeiculosPorAno()');
+
+        $req->execute();
+        
+        $data = $req->fetchAll();
+
+        return $data;
+    }
 }
