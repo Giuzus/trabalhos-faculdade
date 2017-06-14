@@ -27,6 +27,9 @@
         </a>
         <ul class="right">
           <li>
+            <a href="viagens">Viagens</a>
+          </li>
+          <li>
             <a href="funcionarios">Funcionários</a>
           </li>
           <li>
