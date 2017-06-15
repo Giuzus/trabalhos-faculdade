@@ -118,7 +118,7 @@ class Funcionario
                                                           funDtNasc = :funDtNasc,
                                                           funClasse = :funClasse,
                                                           funCateg  = :funCateg
-        WHERE funID = :funID');
+                            WHERE funID = :funID');
 
 
         $statement->bindParam(':funID', intval($funcionario->funID), PDO::PARAM_INT);

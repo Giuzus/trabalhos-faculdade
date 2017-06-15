@@ -3,6 +3,7 @@
   <head>
     <base href="http://localhost/transportadora/">
 	  <title>Estudo dirigido transportadora</title>
+    <!--//TODO: Alterar para fonte local-->
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->

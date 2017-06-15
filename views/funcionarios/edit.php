@@ -10,7 +10,7 @@
                 <input id="funNome" type="text" required class="validate" name="funNome" value="<?php echo $funcionario->funNome ?>" >
                 <label for="funNome">Nome</label>
             </div>
-        
+            <input type="hidden" name="teta" value="TETA MUITO LOCA" />
 
             <div class="input-field col s3">
                 <i class="material-icons prefix">pregnant_woman</i>

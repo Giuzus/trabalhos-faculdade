@@ -21,4 +21,34 @@ class ViagensController
         $rotasDDL = Rota::all();
         require_once ('views/viagens/cadastro.php');
     }
+
+    public function detalhes($id)
+    {
+        $viagem = Viagem::getViagem($id);
+
+        require_once('views/viagens/detalhes.php');
+    }
+
+    public function salvar()
+    {
+        $viagem = Viagem::fromArray($_POST);
+
+        Viagem::create($viagem);
+        
+        RouteManager::redirectTo("viagens", "");
+    }
+
+    public function encerrarViagem()
+    {
+        $viaID = $_POST["viaID"];
+        $kmFim = $_POST["viaKmFim"];
+
+        $viagem = Viagem::getViagem($viaID);
+
+        $viagem->viaKmFim = $kmFim;
+
+        Viagem::update($viagem);
+        
+        RouteManager::redirectTo("viagens", "detalhes", "?id=".$viaID);
+    }
 }

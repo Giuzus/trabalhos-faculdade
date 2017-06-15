@@ -27,10 +27,10 @@ class RouteManager
         RouteManager::callAction('pages', 'error404');
     }
 
-    static function redirectTo($controller, $action)
+    static function redirectTo($controller, $action, $parameters = "")
     {
         $base = BASE_PATH;
-        $url =  $base . $controller . $action;
+        $url =  $base . $controller ."/". $action . $parameters;
 
         header("LOCATION: $url");
     }
