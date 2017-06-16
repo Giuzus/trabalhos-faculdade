@@ -6,7 +6,7 @@ class VeiculosController
 {
     public function index()
     {
-        $veiculos = Veiculo::all();
+        $veiculos = Veiculo::all(true);
 
         require_once('views/veiculos/index.php');
     }

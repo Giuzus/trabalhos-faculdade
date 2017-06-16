@@ -28,10 +28,13 @@
             <div class="input-field col s4">
                 <i class="material-icons prefix">class</i>
                 <select name"veiCateg" required name="veiCateg">
-                    <option value="<?php echo $veiculo->veiCateg ?>"><?php echo $veiculo->veiCateg ?></option>
+                    <option value="" disabled>Selecione</option>
+                    <option value="1" <?php echo $veiculo->veiCateg == 1 ? "selected" : "" ?> >Bruto</option>
+                    <option value="2" <?php echo $veiculo->veiCateg == 2 ? "selected" : "" ?> >Pesado</option>
+                    <option value="3" <?php echo $veiculo->veiCateg == 3 ? "selected" : "" ?> >Dilatado</option>
                 </select>
                 <label>Categoria do veículo</label>
-            </div>            
+            </div>              
 
         </div>
 

@@ -1,6 +1,7 @@
 <?php
 
 require_once('util.php');
+require_once('models/viagem.php');
 
 class Veiculo
 {
@@ -9,6 +10,9 @@ class Veiculo
     public $veiAno;
     public $veiPlaca;
     public $veiCateg;
+
+    public $viagensNavigation;
+
 
     public function __construct()
     {
@@ -20,20 +24,26 @@ class Veiculo
         return dePara($array, new self());
     }
 
-    public static function all()
+    public static function all($inicializaNavigation = false)
     {
         $list = [];
         $db = Db::getInstance();
         $req = $db->query('SELECT * FROM Veiculos');
 
         foreach ($req->fetchAll() as $row) {
-            $list[] = Veiculo::fromArray($row);
+            $veiculo =  Veiculo::fromArray($row);
+            
+            if ($inicializaNavigation) {
+                $veiculo->inicializaNavigations();
+            }
+
+            $list[] = $veiculo;
         }
 
         return $list;
     }
 
-    public static function getVeiculo($id)
+    public static function getVeiculo($id, $inicializaNavigation = false)
     {
         $db = Db::getInstance();
         $statement = $db->prepare('SELECT * FROM Veiculos WHERE veiID = :veiID ');
@@ -42,7 +52,18 @@ class Veiculo
 
         $row = $statement->fetch();
 
-        return Veiculo::fromArray($row);
+        $veiculo = Veiculo::fromArray($row);
+
+        if ($inicializaNavigation) {
+            $veiculo->inicializaNavigations();
+        }
+
+        return $veiculo;
+    }
+
+    public function inicializaNavigations()
+    {
+        $this->viagensNavigation = Viagem::getViagensByIdVeiculo($this->veiID);
     }
 
     public static function buscar($placa)

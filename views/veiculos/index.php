@@ -42,9 +42,18 @@
                             <?php echo $veiculo->veiCateg ?>
                         </div>
                         <div class="col s6">
+
+                            <?php if(count($veiculo->viagensNavigation) > 0 ): ?>
+                            <a disabled class="tooltipped" data-position="top" data-tooltip="Não pode ser excluido pois está associado a uma viagem" >
+                                <i class="material-icons icon-grey right bottom">delete_forever</i> 
+                            </a>
+                            <?php else: ?>
                             <a href="veiculos/excluir?id=<?php echo $veiculo->veiID ?>">
                                 <i class="material-icons icon-grey right bottom">delete_forever</i> 
                             </a>
+                            <?php endif; ?>
+
+                            
                             <a href="veiculos/edit?id=<?php echo $veiculo->veiID ?>">
                                 <i class="material-icons icon-grey right bottom">mode_edit</i> 
                             </a>

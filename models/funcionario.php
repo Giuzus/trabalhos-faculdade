@@ -1,6 +1,7 @@
 <?php
 
 require_once('util.php');
+require_once('models/viagem.php');
 
 class Funcionario
 {
@@ -13,6 +14,8 @@ class Funcionario
     public $funDtNasc;
     public $funClasse;
     public $funCateg;
+
+    public $viagensNavigation;
 
     public function __construct()
     {
@@ -40,12 +43,17 @@ class Funcionario
         return $instance;
     }
 
-    public static function fromArray($array)
+    public function inicializaNavigations()
     {
-        return dePara($array,new self());
+        $this->viagensNavigation = Viagem::getViagensByIdFuncionario($this->funID);
     }
 
-    public static function getFuncionario($id)
+    public static function fromArray($array)
+    {
+        return dePara($array, new self());
+    }
+
+    public static function getFuncionario($id, $inicializaNavigations = false)
     {
         $db = Db::getInstance();
         $statement = $db->prepare('SELECT * FROM Funcionarios WHERE funID = :funID ');
@@ -53,11 +61,16 @@ class Funcionario
         $statement->execute();
 
         $row = $statement->fetch();
+        $funcionario = Funcionario::fromArray($row);
 
-        return Funcionario::fromArray($row);
+        if ($inicializaNavigations) {
+            $funcionario->inicializaNavigations();
+        }
+
+        return $funcionario;
     }
 
-    public static function all()
+    public static function all($inicializaNavigations = false)
     {
         $list = [];
         $db = Db::getInstance();
@@ -65,7 +78,13 @@ class Funcionario
 
         // we create a list of Post objects from the database results
         foreach ($req->fetchAll() as $row) {
-            $list[] = Funcionario::fromArray($row);
+            $func = Funcionario::fromArray($row);
+
+            if ($inicializaNavigations) {
+                $func->inicializaNavigations();
+            }
+
+            $list[] = $func;
         }
 
         return $list;
@@ -80,7 +99,7 @@ class Funcionario
         $statement->execute();
 
         foreach ($statement->fetchAll() as $row) {
-            $retorno[] = Funcionario::fromArray($row);  
+            $retorno[] = Funcionario::fromArray($row);
         }
 
         return $retorno;
@@ -138,6 +157,5 @@ class Funcionario
         
         $req = $db->prepare('DELETE FROM Funcionarios WHERE funID = ' . $id);
         $req->execute();
-
     }
 }

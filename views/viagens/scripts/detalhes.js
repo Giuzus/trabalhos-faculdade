@@ -1,7 +1,13 @@
 
 $(document).ready(function () {
 
-	$('.modal').modal();
+    $('.modal').modal({
+        ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+            //inicializaDatepicker();
+        },
+    });
+
+    inicializaDatepicker();
 
 	$("#encerrarViagemForm").validate({
         rules: {
@@ -20,3 +26,12 @@ $(document).ready(function () {
     });
 
 });
+
+function inicializaDatepicker(){
+    $('.datepicker').pickadate({
+        selectYears: 80,
+        formatSubmit: 'yyyy/mm/dd',
+        format: 'dd/mm/yyyy',
+        hiddenSuffix: ''
+    });
+}

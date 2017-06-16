@@ -10,7 +10,7 @@ class ViagensController
     public function index()
     {
         $viagens = Viagem::all();
-
+        
         require_once('views/viagens/index.php');
     }
 
@@ -50,5 +50,20 @@ class ViagensController
         Viagem::update($viagem);
         
         RouteManager::redirectTo("viagens", "detalhes", "?id=".$viaID);
+    }
+
+    public function adicionarDespesa()
+    {
+        $despesa = Despesa::fromArray($_POST);
+        Despesa::create($despesa);
+
+        RouteManager::redirectTo("viagens","detalhes","?id=".$despesa->viaID);
+    }
+
+    public function removerDespesa($id)
+    {
+        $despesa = Despesa::delete($id);
+
+        RouteManager::redirectTo("viagens","detalhes","?id=".$despesa->viaID);
     }
 }

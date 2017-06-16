@@ -6,7 +6,7 @@ class RotasController
 {
     public function index()
     {       
-        $rotas = Rota::all();
+        $rotas = Rota::all(true);
         require_once('views/rotas/index.php');
     }
 

@@ -21,9 +21,18 @@
                             <?php echo $rota->filID ?>
                         </div>
                         <div class="col s6">
+
+                            <?php if(count($rota->viagensNavigation) > 0 ): ?>
+                            <a disabled class="tooltipped" data-position="top" data-tooltip="Não pode ser excluido pois está associado a uma viagem" >
+                                <i class="material-icons icon-grey right bottom">delete_forever</i> 
+                            </a>
+                            <?php else: ?>
                             <a href="rotas/excluir?id=<?php echo $rota->rtaID ?>">
                                 <i class="material-icons icon-grey right bottom">delete_forever</i> 
                             </a>
+                            <?php endif; ?>
+
+                            
                             <a href="rotas/edit?id=<?php echo $rota->rtaID ?>">
                                 <i class="material-icons icon-grey right bottom">mode_edit</i> 
                             </a>

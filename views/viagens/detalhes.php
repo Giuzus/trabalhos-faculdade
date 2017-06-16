@@ -197,13 +197,109 @@
     </table>
 
     <br/>
+    <h5> Despesas: </h5>
+    <table class="bordered" style="margin-bottom: 20px">
+        <thead>
+            <tr>
+                <td>
+                    ID
+                </td>
+                <td>
+                    Data
+                </td>
+                <td>
+                    Descrição
+                </td>
+                <td>
+                    Valor
+                </td>
+                <td>
+
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($viagem->despesasNavigation as $despesa) :?>
+                <tr>
+                    <td>
+                        <?php echo $despesa->dspSeq ?>
+                    </td>
+                    <td>
+                        <?php echo $despesa->dspData ?>
+                    </td>
+                    <td>
+                        <?php echo $despesa->dspDescr ?>
+                    </td>
+                    <td>
+                        <?php echo $despesa->dspValor ?>
+                    </td>
+                    <td>
+                        <?php if(!isset($viagem->viaKmFim) || $viagem->viaKmFim == ""): ?>
+                        <a href="viagens/removerDespesa?id=<?php echo $despesa->dspSeq ?>"> 
+                            <i class="material-icons">
+                                clear
+                            </i>
+                        </a>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+
+    </table>
+    <div class="row">
+        <div class="right" style="margin-bottom:20px">
+            
+            <?php if(!isset($viagem->viaKmFim) || $viagem->viaKmFim == ""): ?>
+
+            <!-- Modal Trigger -->
+            <a class="waves-effect waves-light btn" href="#modalCadastroDespesas">Adicionar despesa</a>
+
+            <!-- Modal Structure -->
+            <div id="modalCadastroDespesas" class="modal">
+                <form id="encerrarViagemForm" action="viagens/adicionarDespesa" method="POST">
+                    <div class="modal-content">
+                        <h4>Adicionar despesa</h4>
+                        <div class="row">
+                            <input type="hidden" name="viaID" value="<?php echo $viagem->viaID ?>" />
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">input</i>
+                                <input id="dspData" type="text" required  class="datepicker" name="dspData">
+                                <label for="dspData">Data</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">input</i>
+                                <input id="dspDescr" type="text" required maxlength="20" class="validate" name="dspDescr">
+                                <label for="dspDescr">Descrição</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">input</i>
+                                <input id="dspValor" type="number" required class="validate" name="dspValor">
+                                <label for="dspValor">Valor</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="waves-effect waves-green btn-flat" type="submit" >
+                            Confirmar
+                        </button>
+                        <a class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
+                        
+                    </div>
+                </form>
+            </div>
+
+            <?php endif; ?>
+        </div>
+    </div>
+    <br/>
 	
 	<div class="right" style="margin-bottom:20px">
 		
 		<?php if(!isset($viagem->viaKmFim) || $viagem->viaKmFim == ""): ?>
 
 		<!-- Modal Trigger -->
-		<a class="waves-effect waves-light btn" href="#modalEncerrarViagem">Modal</a>
+		<a class="waves-effect waves-light btn" href="#modalEncerrarViagem">Encerrar viagem</a>
 
 		<!-- Modal Structure -->
 		<div id="modalEncerrarViagem" class="modal">
@@ -221,10 +317,10 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<a class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
 					<button class="waves-effect waves-green btn-flat" type="submit" >
 						Confirmar
 					</button>
+                    <a class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
 				</div>
 			</form>
 		</div>
@@ -238,3 +334,4 @@
 </div>
 
 <script type="text/javascript" src="views/viagens/scripts/detalhes.js"></script>
+<script type="text/javascript" src="content/imported/jquery-validation/jquery.validate.min.js"></script>

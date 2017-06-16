@@ -1,6 +1,7 @@
 <?php
 
 require_once('util.php');
+require_once('models/viagem.php');
 
 class Rota
 {
@@ -8,6 +9,8 @@ class Rota
     public $rtaNome;
     public $rtaQtInterm;
     public $filID;
+
+    public $viagensNavigation;
 
     public function __construct()
     {
@@ -19,20 +22,26 @@ class Rota
         return dePara($array, new self());
     }
 
-    public static function all()
+    public static function all($inicializaNavigation = false)
     {
         $list = [];
         $db = Db::getInstance();
         $req = $db->query('SELECT * FROM Rotas');
 
         foreach ($req->fetchAll() as $row) {
-            $list[] = Rota::fromArray($row);
+            $rota = Rota::fromArray($row);
+
+            if ($inicializaNavigation) {
+                $rota->inicializaNavigations();
+            }
+
+            $list[] = $rota;
         }
 
         return $list;
     }
 
-    public static function getRota($id)
+    public static function getRota($id, $inicializaNavigation = false)
     {
         $db = Db::getInstance();
         $statement = $db->prepare('SELECT * FROM Rotas WHERE rtaID = :rtaID ');
@@ -41,7 +50,18 @@ class Rota
 
         $row = $statement->fetch();
 
-        return Rota::fromArray($row);
+        $rota = Rota::fromArray($row);
+ 
+        if ($inicializaNavigation) {
+            $rota->inicializaNavigations();
+        }
+
+        return $rota;
+    }
+
+    public function inicializaNavigations()
+    {
+        $this->viagensNavigation = Viagem::getViagensByIdRota($this->rtaID);
     }
 
     public static function create($rota)

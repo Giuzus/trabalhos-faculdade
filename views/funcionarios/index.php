@@ -46,9 +46,17 @@
                             <?php echo $funcionario->funCateg ?>
                         </div>
                         <div class="col s6">
-                            <a href="funcionarios/excluir?id=<?php echo $funcionario->funID ?>">
+
+                            <?php if(count($funcionario->viagensNavigation) > 0 ): ?>
+                            <a disabled class="tooltipped" data-position="top" data-tooltip="Não pode ser excluido pois está associado a uma viagem" >
                                 <i class="material-icons icon-grey right bottom">delete_forever</i> 
                             </a>
+                            <?php else: ?>
+                            <a href="funcionarios/excluir?id=<?php echo $funcionario->funID ?>" >
+                                <i class="material-icons icon-grey right bottom">delete_forever</i> 
+                            </a>
+                            <?php endif; ?>
+                            
                             <a href="funcionarios/edit?id=<?php echo $funcionario->funID ?>">
                                 <i class="material-icons icon-grey right bottom">mode_edit</i> 
                             </a>

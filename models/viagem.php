@@ -4,6 +4,7 @@ require_once('util.php');
 require_once('models/veiculo.php');
 require_once('models/rota.php');
 require_once('models/funcionario.php');
+require_once('models/despesa.php');
 
 class Viagem
 {
@@ -21,11 +22,13 @@ class Viagem
     public $veiculoNavigation;
     public $rtaNavigation;
 
+    public $despesasNavigation;
+
     //TODO: Como é um metodo generico, pode ser movido para algum lugar
-    //para não precisar ser criado sempre que se cria uma model;
+    //para não precisar ser criado sempre que se cria uma nova model;
     public static function fromArray($array)
     {
-        $viagem = dePara($array, new self()); 
+        $viagem = dePara($array, new self());
         $viagem->inicializaNavigations();
         return $viagem;
     }
@@ -55,11 +58,59 @@ class Viagem
         return Viagem::fromArray($row);
     }
 
+
+    public static function getViagensByIdFuncionario($id)
+    {
+        $db = Db::getInstance();
+        $statement = $db->prepare('SELECT * FROM Viagens WHERE funID = :funID ');
+        $statement->bindParam(':funID', $id);
+        $statement->execute();
+
+        $list = [];
+        foreach ($statement->fetchAll() as $row) {
+            $list[] = Viagem::fromArray($row);
+        }
+
+        return $list;
+    }
+
+    public static function getViagensByIdRota($id)
+    {
+        $db = Db::getInstance();
+        $statement = $db->prepare('SELECT * FROM Viagens WHERE rtaID = :rtaID ');
+        $statement->bindParam(':rtaID', $id);
+        $statement->execute();
+
+        $list = [];
+        foreach ($statement->fetchAll() as $row) {
+            $list[] = Viagem::fromArray($row);
+        }
+
+        return $list;
+    }
+
+    public static function getViagensByIdVeiculo($id)
+    {
+        $db = Db::getInstance();
+        $statement = $db->prepare('SELECT * FROM Viagens WHERE veiID = :veiID ');
+        $statement->bindParam(':veiID', $id);
+        $statement->execute();
+
+        $list = [];
+        foreach ($statement->fetchAll() as $row) {
+            $list[] = Viagem::fromArray($row);
+        }
+
+        return $list;
+    }
+
+
     public function inicializaNavigations()
     {
         $this->funcionarioNavigation = Funcionario::getFuncionario($this->funID);
         $this->veiculoNavigation = Veiculo::getVeiculo($this->veiID);
         $this->rtaNavigation = Rota::getRota($this->rtaID);
+        $this->despesasNavigation = Despesa::getAllByIdViagem($this->viaID);
     }
 
     public static function create($viagem)
@@ -92,14 +143,14 @@ class Viagem
          :veiID,
          :rtaID);
         ');
-        $statement->bindParam(':viaID',     $id );
-        $statement->bindParam(':viaData',   $viagem->viaData);
-        $statement->bindParam(':viaObs',    $viagem->viaObs );
-        $statement->bindParam(':viaKmIni',  $viagem->viaKmIni );
-        $statement->bindParam(':viaKmFim',  $viagem->viaKmFim );
-        $statement->bindParam(':funID',     $viagem->funID );
-        $statement->bindParam(':veiID',     $viagem->veiID );
-        $statement->bindParam(':rtaID',     $viagem->rtaID );
+        $statement->bindParam(':viaID', $id );
+        $statement->bindParam(':viaData', $viagem->viaData);
+        $statement->bindParam(':viaObs', $viagem->viaObs );
+        $statement->bindParam(':viaKmIni', $viagem->viaKmIni );
+        $statement->bindParam(':viaKmFim', $viagem->viaKmFim );
+        $statement->bindParam(':funID', $viagem->funID );
+        $statement->bindParam(':veiID', $viagem->veiID );
+        $statement->bindParam(':rtaID', $viagem->rtaID );
         $statement->execute();
     }
 
@@ -119,14 +170,14 @@ class Viagem
         WHERE `viaID` = :viaID;
         ');
  
-        $statement->bindParam(':viaID',     $viagem->viaID);
-        $statement->bindParam(':viaData',   $viagem->viaData);
-        $statement->bindParam(':viaObs',    $viagem->viaObs );
-        $statement->bindParam(':viaKmIni',  $viagem->viaKmIni );
-        $statement->bindParam(':viaKmFim',  $viagem->viaKmFim );
-        $statement->bindParam(':funID',     $viagem->funID );
-        $statement->bindParam(':veiID',     $viagem->veiID );
-        $statement->bindParam(':rtaID',     $viagem->rtaID );
+        $statement->bindParam(':viaID', $viagem->viaID);
+        $statement->bindParam(':viaData', $viagem->viaData);
+        $statement->bindParam(':viaObs', $viagem->viaObs );
+        $statement->bindParam(':viaKmIni', $viagem->viaKmIni );
+        $statement->bindParam(':viaKmFim', $viagem->viaKmFim );
+        $statement->bindParam(':funID', $viagem->funID );
+        $statement->bindParam(':veiID', $viagem->veiID );
+        $statement->bindParam(':rtaID', $viagem->rtaID );
         $statement->execute();
     }
 }

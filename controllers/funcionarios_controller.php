@@ -8,7 +8,7 @@ class FuncionariosController
         
     public function index()
     {
-        $funcionarios = Funcionario::all();
+        $funcionarios = Funcionario::all(true);
         require_once('views/funcionarios/index.php');
     }
 
