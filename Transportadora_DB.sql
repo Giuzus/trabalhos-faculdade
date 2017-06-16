@@ -4,7 +4,6 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
@@ -30,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `Trasportadora_DB`.`Veiculos` (
   PRIMARY KEY (`veiID`),
   UNIQUE INDEX `veiID` (`veiID` ASC))
 ENGINE = InnoDB
-AUTO_INCREMENT = 15
+AUTO_INCREMENT = 16
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -48,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `Trasportadora_DB`.`Funcionarios` (
   PRIMARY KEY (`funID`),
   UNIQUE INDEX `funID` (`funID` ASC))
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -60,15 +59,11 @@ CREATE TABLE IF NOT EXISTS `Trasportadora_DB`.`Localidades` (
   `locNome` CHAR(25) NULL DEFAULT NULL,
   `locUF` CHAR(2) NULL DEFAULT NULL,
   `locDistFil` INT(11) NULL DEFAULT NULL,
-  `filID` BIGINT(20) UNSIGNED NULL DEFAULT NULL,
   `locISS` DECIMAL(10,2) NULL DEFAULT NULL,
   PRIMARY KEY (`locID`),
-  UNIQUE INDEX `locID` (`locID` ASC),
-  INDEX `FK_Localidades_17` (`filID` ASC),
-  CONSTRAINT `FK_Localidades_17`
-    FOREIGN KEY (`filID`)
-    REFERENCES `Trasportadora_DB`.`Filiais` (`filID`))
+  UNIQUE INDEX `locID` (`locID` ASC))
 ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -88,6 +83,7 @@ CREATE TABLE IF NOT EXISTS `Trasportadora_DB`.`Filiais` (
     FOREIGN KEY (`locID`)
     REFERENCES `Trasportadora_DB`.`Localidades` (`locID`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -106,6 +102,7 @@ CREATE TABLE IF NOT EXISTS `Trasportadora_DB`.`Rotas` (
     FOREIGN KEY (`filID`)
     REFERENCES `Trasportadora_DB`.`Filiais` (`filID`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -181,6 +178,7 @@ CREATE TABLE IF NOT EXISTS `Trasportadora_DB`.`Clientes` (
     FOREIGN KEY (`locID`)
     REFERENCES `Trasportadora_DB`.`Localidades` (`locID`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -296,16 +294,16 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `Trasportadora_DB`.`Despesas`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Trasportadora_DB`.`Despesas` (
-  `veiID` BIGINT(20) UNSIGNED NOT NULL,
   `dspSeq` INT(11) NOT NULL,
   `dspData` DATE NULL DEFAULT NULL,
   `dspDescr` CHAR(20) NULL DEFAULT NULL,
   `dspValor` DECIMAL(10,2) NULL DEFAULT NULL,
-  `dspKmVei` INT(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`veiID`, `dspSeq`),
-  CONSTRAINT `FK_Despesas_53`
-    FOREIGN KEY (`veiID`)
-    REFERENCES `Trasportadora_DB`.`Veiculos` (`veiID`))
+  `viaID` INT(11) NOT NULL,
+  PRIMARY KEY (`dspSeq`),
+  INDEX `viaID` (`viaID` ASC),
+  CONSTRAINT `Despesas_ibfk_1`
+    FOREIGN KEY (`viaID`)
+    REFERENCES `Trasportadora_DB`.`Viagens` (`viaID`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -450,6 +448,20 @@ END$$
 
 DELIMITER ;
 
+-- -----------------------------------------------------
+-- procedure simpleproc
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `Trasportadora_DB`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `simpleproc`(OUT param1 INT)
+BEGIN
+	select veiAno as Ano, count(veiAno) Qtd
+	from Veiculos v
+	group by v.veiAno;
+END$$
+
+DELIMITER ;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
