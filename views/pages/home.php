@@ -6,16 +6,18 @@
     <p>
         Trabalho apresentado como requisito de avaliação do 2º bimestre
         <br>
-        para a matéria de Programação em Banco de Dados.
+        para a matéria de Programação em Banco de Dados e Programação Web.
         <br>
         <br>
-        Professor: Edivaldão
+        Professor: Edivaldo e Ricardo
         <br>
         Alunos:
         <br>
-        Allysson Elricu
+        Allysson Matheus dos Santos
         <br>
-        Guilherme Ackermanu
+        Guilherme Rangel Santana Santos
+        <br>
+        Robson Isaac de Matos
     </p>   
     
 </div>
